@@ -110,3 +110,18 @@ Contributions are what make the open source community such an amazing place to l
 * [IBM](https://cloud.ibm.com/)
 * [LAST.FM SONGS](https://www.last.fm/)
 * [ANVIL FRAMEWORK](https://anvil.works/)
+
+## Final Look of the Project
+
+#### 1. Home page
+![image](https://user-images.githubusercontent.com/82352524/132095606-218ef050-ed07-4492-bd4c-7b86f8e90b72.png)
+
+#### 2. Chat
+![image](https://user-images.githubusercontent.com/82352524/132095624-71c8e9ed-83ac-4343-ae43-f6459ba8414a.png)
+
+#### 3. Review
+![image](https://user-images.githubusercontent.com/82352524/132095650-efc9af9e-afed-495b-80e3-36f23d486362.png)
+
+#### 4. About Us
+![image](https://user-images.githubusercontent.com/82352524/132095660-75736123-75e0-449c-ad8c-a59dd279beaa.png)
+
