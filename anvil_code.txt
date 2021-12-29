@@ -1,0 +1,269 @@
+                             Home
+``````````````````````````````````````````````````````````````````````````````````````````````````````
+from ._anvil_designer import HomeTemplate
+from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+
+
+
+class Home(HomeTemplate):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+  
+
+    # Any code you write here will run when the form opens.
+
+````````````````````````````````````````````````````````````````````````````````````````````````````````
+                          About
+```````````````````````````````````````````````````````````````````````````````````````````````````````
+from ._anvil_designer import AboutTemplate
+from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+
+class About(AboutTemplate):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+
+    # Any code you write here will run when the form opens.
+
+  def link_2_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    pass
+
+````````````````````````````````````````````````````````````````````````````````````````````````````````
+                 Contact(feedback page)
+````````````````````````````````````````````````````````````````````````````````````````````````````````
+from ._anvil_designer import ContactTemplate
+from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+
+
+class Contact(ContactTemplate):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+    #TODO: put items in designer
+    
+
+  def submit_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    name = self.name_box.text
+    email = self.email_box.text
+    ratings = self.ratings.text
+    question = self.question_area.text
+    if name and email and ratings and question:
+      anvil.server.call('add_contact_info', name, email, ratings, question)
+      alert("Thanks for your response!!")
+      self.name_box.text = ""
+      self.email_box.text = ""
+      self.ratings.text = ""
+      self.question_area.text = ""
+    else:
+      alert("Please fill out the entire form before submitting.")
+
+````````````````````````````````````````````````````````````````````````````````````````````````````````
+                                   Main(header or nav bar)
+````````````````````````````````````````````````````````````````````````````````````````````````````````
+from ._anvil_designer import MainTemplate
+from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+from ..Home import Home
+from ..About import About
+from ..Contact import Contact
+from ..Pricing import Pricing
+
+
+class Main(MainTemplate):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+    self.content_panel.add_component(Home(), full_width_row=True)
+
+    
+  def contact_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.content_panel.clear()
+    self.content_panel.add_component(Contact(), full_width_row=True)
+
+  def about_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.content_panel.clear()
+    self.content_panel.add_component(About(), full_width_row=True)
+
+  def home_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.content_panel.clear()
+    self.content_panel.add_component(Home(), full_width_row=True)
+
+  def bottom_about_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.about_link_click()
+
+  def bottom_contact_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.contact_link_click()
+
+  def pricing_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.content_panel.clear()
+    self.content_panel.add_component(Pricing(), full_width_row=True)
+
+  def faq_link_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    self.content_panel.clear()
+    self.content_panel.add_component(FAQ(), full_width_row=True)
+
+``````````````````````````````````````````````````````````````````````````````````````````````````
+                   Pricing(Chat)
+``````````````````````````````````````````````````````````````````````````````````````````````````````
+from ._anvil_designer import PricingTemplate
+from anvil import *
+import anvil.google.auth, anvil.google.drive
+from anvil.google.drive import app_files
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+
+dict1 = dict()
+class Pricing(PricingTemplate):
+  def __init__(self, **properties):
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+
+  def text_box_1_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    user_input = self.text_box_1.text
+    output =  anvil.server.call('responsed', user_input)
+    self.text_box_2.visible = True
+    self.label_3.visible = True
+    self.text_box_2.text = output
+    self.text_box_4.visible = True
+    self.label_9.visible = True
+#     text_box = Text
+#     self.add_component(text_box)
+#     to print output on text_box_2
+    pass
+
+  def text_box_4_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    user_input = self.text_box_4.text
+    output =  anvil.server.call('responsed', user_input)
+    self.text_box_5.visible = True
+    self.label_13.visible = True
+    self.text_box_5.text = output
+    self.text_box_6.visible = True
+    self.label_10.visible = True
+    pass
+  
+  def text_box_6_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    user_input = self.text_box_6.text
+    output =  anvil.server.call('responsed', user_input)
+    self.text_box_7.visible = True
+    self.label_14.visible = True
+    self.text_box_7.text = output
+    self.text_box_8.visible = True
+    self.label_11.visible = True
+    pass
+  
+  def text_box_8_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    user_input = self.text_box_8.text
+    output =  anvil.server.call('responsed', user_input)
+    self.text_box_9.visible = True
+    self.label_15.visible = True
+    self.text_box_9.text = output
+    self.text_box_11.visible = True
+    self.label_12.visible = True
+    pass
+  
+  def text_box_11_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    user_input = self.text_box_11.text
+    output =  anvil.server.call('responsed', user_input)
+    self.text_box_10.visible = True
+    self.label_16.visible = True
+    self.text_box_10.text = output
+    pass
+
+  def button_2_click(self, **event_args):
+    """This method is called when the button is clicked"""
+#     song_emotion --> function name
+    dict1 = anvil.server.call('song_emotion')
+#     print(dict1)
+    self.label_5.text = dict1['emotion']
+    dict1.pop('emotion')
+    lst = list(dict1.keys())
+#     for key in dict1:
+#       lst.append(key)
+    self.link_1.url = dict1[lst[0]];
+    self.link_1.text = lst[0]
+    self.link_5.url = dict1[lst[1]];
+    self.link_5.text = lst[1]
+    self.link_4.url = dict1[lst[2]];
+    self.link_4.text = lst[2]
+    self.link_3.url = dict1[lst[3]];
+    self.link_3.text = lst[3]
+    self.link_2.url = dict1[lst[4]];
+    self.link_2.text = lst[4]
+    self.link_6.url = dict1[lst[5]];
+    self.link_6.text = lst[5]
+    self.link_10.url = dict1[lst[6]];
+    self.link_10.text = lst[6]
+    self.link_9.url = dict1[lst[7]];
+    self.link_9.text = lst[7]
+    self.link_8.url = dict1[lst[8]];
+    self.link_8.text = lst[8]
+    self.link_7.url = dict1[lst[9]];
+    self.link_7.text = lst[9]
+    pass
+
+  def text_box_2_pressed_enter(self, **event_args):
+    """This method is called when the user presses Enter in this text box"""
+    pass
+
+`````````````````````````````````````````````````````````````````````````````````````````````````````
+  ### server code, add a module under"server code" then copy paste the following code
+````````````````````````````````````````````````````````````````````````````````````````````
+import anvil.google.auth, anvil.google.drive, anvil.google.mail
+from anvil.google.drive import app_files
+
+import anvil.email
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
+import anvil.server
+from datetime import datetime
+
+
+@anvil.server.callable
+def add_contact_info(name, email, topic, question):
+  app_tables.contact.add_row(name=name, email=email, topic=topic, question=question, time=datetime.now())
+  anvil.email.send(from_name="feedback form", 
+                   subject="Feedback form",
+                   text=f"Feedback form from {name} ({email})\nRatings: {topic}\nComment/Question: {question}")
+
+`````````````````````````````````````````````````````````````````````````````````````````````````````
